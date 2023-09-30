@@ -5,15 +5,39 @@ import { Component } from 'react';
 import toDoItems from '../toDoListData.json';
 import { nanoid } from 'nanoid';
 import { MoreInfo } from "./MoreInfo/MoreInfo";
+import { Filter } from "./Filter/Filter"
+import { Modal } from "./Modal/Modal";
+import {createPortal } from 'react';
+import { PokemonForm } from './Pokemons/FormForPocemon'
+import { PokemonInfo } from "./Pokemons/PocemonInfo";
+
+const modalRoot = document.querySelector('#modal-root')
 
 export class App extends Component {
 
   state = {
     tasks: toDoItems,
+    filter: '',
+    isOpen: false,
+    pokemon: null,
+    pokeName: '',
+    loading: false,
+  }
+
+  componentDidMount() {
+     this.setState({loading: true})
+    fetch('https://pokeapi.co/api/v2/pokemon/ditto')
+      .then(res => res.json())
+      .then(pokemon => (this.setState({ pokemon })))
+    .finally(()=>( this.setState({loading:false})))
+  }
+
+  getPokemonName = (pokeName) => {
+    this.setState({pokeName})
+    
   }
 
   calcTotal = () => {
-    console.log(this.state.tasks.length)
     return this.state.tasks.length
   }
 
@@ -63,15 +87,49 @@ export class App extends Component {
      )
 
 
-    }
+  }
+  
+  FilterChange = e => {
+    this.setState({
+      filter: e.currentTarget.value
+    })
+  }
+
+  getVisibleTodos = () => {
+    const { filter,  tasks } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+
+    return  tasks.filter(todo =>
+      todo.text.toLowerCase().includes(normalizedFilter),
+    );
+  };
+
+  toggleModal = () => {
+    document.activeElement.blur();
+    this.setState((prev) => {
+      return {
+        isOpen: !prev.isOpen
+      }
+    })
+}
 
   render() {
+    const { toggleModal,getPokemonName, calcTotal, calcCompleted, getNewTask, handleDeleteItem, handleCompleteTask, FilterChange, getVisibleTodos } = this;
+    const { tasks, filter, isOpen, loading, pokemon, pokeName } = this.state
+    const visibleToDos = getVisibleTodos();
     return (
       <>
         <GlobalStyle />
-        <MoreInfo total={this.calcTotal()} completed={this.calcCompleted()}/>
-        <ToDoEditor addNewTask={ this.getNewTask} />
-        <ToDoList justItems={this.state.tasks} handleDeleteItem={ this.handleDeleteItem}  handleCompleteTask={ this.handleCompleteTask} />
+        <button type='button' onClick={toggleModal}>Click there</button>
+        {isOpen && <Modal isClose={toggleModal}/>}
+        {loading && <p>Loading...</p>}
+        {pokemon && <p>Take your pokemon!</p>}
+        <PokemonForm getName={getPokemonName} />
+        <PokemonInfo name={pokeName} />
+        {/* <MoreInfo total={calcTotal()} completed={calcCompleted()}/>
+        <ToDoEditor addNewTask={getNewTask} />
+        <Filter value={filter} onChange={FilterChange} />
+        <ToDoList justItems={visibleToDos} handleDeleteItem={ handleDeleteItem}  handleCompleteTask={handleCompleteTask} /> */}
       </>
 )
   }

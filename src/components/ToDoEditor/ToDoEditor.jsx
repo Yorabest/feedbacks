@@ -1,5 +1,5 @@
 import { Component } from "react";
-import {Form, Label, Button} from './ToDOEditor.styled'
+import {Form, Label, Button, AddTaskField} from './ToDOEditor.styled'
 
 export class ToDoEditor extends Component { 
 
@@ -48,7 +48,7 @@ export class ToDoEditor extends Component {
         return <Form onSubmit={handleSubmit}>
             <Label htmlFor="put here">
                 Put your task
-                <textarea id="put here"  value={text}  onChange={handleChange}/>
+                <AddTaskField id="put here"  value={text}  onChange={handleChange}/>
             </Label>
             <Button type="submit">Create</Button>
         </Form>

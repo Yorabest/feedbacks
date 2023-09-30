@@ -14,6 +14,7 @@ export const Text = styled.p`
   margin-top: 0;
     margin-bottom: 0;
     margin-right: 10px;
+   text-decoration: ${p => p.completed ? 'line-through' : 'none'}; 
 `
 export const Button = styled.button`
   display: inline-flex;
