@@ -10,6 +10,7 @@ import { Modal } from "./Modal/Modal";
 import {createPortal } from 'react';
 import { PokemonForm } from './Pokemons/FormForPocemon'
 import { PokemonInfo } from "./Pokemons/PocemonInfo";
+import { SearchImg } from "./SearchImg/SearchImg";
 
 const modalRoot = document.querySelector('#modal-root')
 
@@ -25,11 +26,11 @@ export class App extends Component {
   }
 
   componentDidMount() {
-     this.setState({loading: true})
-    fetch('https://pokeapi.co/api/v2/pokemon/ditto')
-      .then(res => res.json())
-      .then(pokemon => (this.setState({ pokemon })))
-    .finally(()=>( this.setState({loading:false})))
+    //  this.setState({loading: true})
+    // fetch('https://pokeapi.co/api/v2/pokemon/ditto')
+    //   .then(res => res.json())
+    //   .then(pokemon => (this.setState({ pokemon })))
+    // .finally(()=>( this.setState({loading:false})))
   }
 
   getPokemonName = (pokeName) => {
@@ -120,12 +121,13 @@ export class App extends Component {
     return (
       <>
         <GlobalStyle />
-        <button type='button' onClick={toggleModal}>Click there</button>
+        <SearchImg/>
+        {/* <button type='button' onClick={toggleModal}>Click there</button>
         {isOpen && <Modal isClose={toggleModal}/>}
         {loading && <p>Loading...</p>}
         {pokemon && <p>Take your pokemon!</p>}
         <PokemonForm getName={getPokemonName} />
-        <PokemonInfo name={pokeName} />
+        <PokemonInfo name={pokeName} /> */}
         {/* <MoreInfo total={calcTotal()} completed={calcCompleted()}/>
         <ToDoEditor addNewTask={getNewTask} />
         <Filter value={filter} onChange={FilterChange} />
