@@ -1,11 +1,54 @@
-import { Component } from 'react';
+import { Component, useState } from 'react';
 import { FeedbackOptions } from './FeedbackOptions';
 import { Statistics } from './Statistics';
 import { Section } from 'components/Section/Section';
 import { Notification } from './Notification';
 
+const useHandlerFedback = (chengeFeedback) => {
+     chengeFeedback(prev => prev + 1)
+}
 
-export class Feedbacks extends Component{
+export const Feedbacks = () => {
+   const [good, setGood] = useState(0);
+   const [neutral, setNeutral] = useState(0);
+   const [bad, setBad] = useState(0);
+
+   const countTotalFaadback = () => good + neutral + bad;
+    
+    const countPositiveFeedbackPercentage = () => {
+        const total = countTotalFaadback()
+        const precentage = good / total * 100
+        return `${Math.round(precentage)}%`
+    }
+
+    return <>
+            <Section title='Please leave feedback'>
+            <FeedbackOptions
+                change={useHandlerFedback}
+                useGood={setGood}
+                useNeutral={setNeutral}
+                useBad={setBad}
+            />
+            </Section>
+            {countTotalFaadback() ? <> 
+            <Section title='Statistics'>
+            <Statistics
+                good={good }
+                neutral={neutral}
+                bad={bad}
+                total={countTotalFaadback()}
+                positivePrecentage={countPositiveFeedbackPercentage()}
+            />
+                </Section>
+            </> : <Section title='Statistics'><Notification message='There is no feedback' /></Section>}
+           
+        </>
+
+
+}
+
+
+export class OldFeedbacks extends Component{
 
     state = {
         good: 0,

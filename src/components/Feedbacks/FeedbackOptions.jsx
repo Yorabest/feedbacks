@@ -1,19 +1,22 @@
 import { Button } from "./FeedbacksItems/Buttons";
 
-export const FeedbackOptions = ({good, neutral, bad}) => {
+export const FeedbackOptions = ({change, useGood, useNeutral, useBad}) => {
     return <>
     <ul>
                 <Button
                     type='Good'
-                    handlerAddFeedback={good}
+                handlerAddFeedback={change}
+                use={useGood}
                 />
                 <Button
                     type='Neutral'
-                    handlerAddFeedback={neutral}
+                handlerAddFeedback={change}
+                use={useNeutral}
                 />
                 <Button
                     type='Bad'
-                    handlerAddFeedback={bad}
+                handlerAddFeedback={change}
+                use={useBad}
                 />
         </ul>
     </>

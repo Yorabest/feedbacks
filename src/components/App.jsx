@@ -11,6 +11,7 @@ import {createPortal } from 'react';
 import { PokemonForm } from './Pokemons/FormForPocemon'
 import { PokemonInfo } from "./Pokemons/PocemonInfo";
 import { SearchImg } from "./SearchImg/SearchImg";
+import { Feedbacks } from "./Feedbacks/Feedbacks";
 
 const modalRoot = document.querySelector('#modal-root')
 
@@ -121,13 +122,14 @@ export class App extends Component {
     return (
       <>
         <GlobalStyle />
-        <SearchImg/>
+        <Feedbacks/>
+        {/* <SearchImg/> */}
         {/* <button type='button' onClick={toggleModal}>Click there</button>
         {isOpen && <Modal isClose={toggleModal}/>}
         {loading && <p>Loading...</p>}
-        {pokemon && <p>Take your pokemon!</p>}
-        <PokemonForm getName={getPokemonName} />
-        <PokemonInfo name={pokeName} /> */}
+        {pokemon && <p>Take your pokemon!</p>} */}
+        {/* <PokemonForm getName={getPokemonName} />
+        <PokemonInfo name={pokeName} />  */}
         {/* <MoreInfo total={calcTotal()} completed={calcCompleted()}/>
         <ToDoEditor addNewTask={getNewTask} />
         <Filter value={filter} onChange={FilterChange} />
